@@ -7,9 +7,16 @@ import {
   ShoppingCartIcon,
   ChatBubbleBottomCenterTextIcon,
   EyeIcon,
-  EyeSlashIcon
+  EyeSlashIcon,
+  HeartIcon,
+  UserCircleIcon,
+  Bars3Icon,
+  MagnifyingGlassIcon,
+  CameraIcon
 } from "react-native-heroicons/outline";
-import Svg, { Path, G } from 'react-native-svg';
+
+import { ChevronLeftIcon } from "react-native-heroicons/solid";
+import Svg, { Path, G } from "react-native-svg";
 
 const GoogleIcon = () => (
   <Svg width="24" height="24" viewBox="-0.5 0 48 48">
@@ -36,7 +43,11 @@ const FacebookIcon = () => {
   return (
     <Svg viewBox="0 0 16 16" fill="none" width={24} height={24}>
       <G id="SVGRepo_bgCarrier" strokeWidth="0"></G>
-      <G id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></G>
+      <G
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></G>
       <G id="SVGRepo_iconCarrier">
         <Path
           fill="#1877F2"
@@ -51,8 +62,36 @@ const FacebookIcon = () => {
   );
 };
 
+interface IconProps {
+  name: string;
+  size: number;
+  color: string;
+}
+
+const IconMap: Record<string, React.FC<{ size: number; color: string }>> = {
+  home: HomeIcon,
+  "home-outline": HomeIcon,
+  create: CubeTransparentIcon,
+  heart: HeartIcon,
+  "heart-outline": HeartIcon,
+  "create-outline": CubeTransparentIcon,
+  cart: ShoppingCartIcon,
+  "cart-outline": ShoppingCartIcon,
+  settings: Cog6ToothIcon,
+  "chat-outline": ChatBubbleBottomCenterTextIcon,
+  eye: EyeIcon,
+  "eye-slash": EyeSlashIcon,
+  upload: ArrowUpOnSquareIcon,
+  "stack-outline": Square3Stack3DIcon,
+};
+
+const Icon = ({ name, size, color }: IconProps) => {
+  const IconComponent = IconMap[name];
+  return IconComponent ? <IconComponent size={size} color={color} /> : null;
+};
 
 export default {
+  Icon,
   HomeIcon,
   CubeTransparentIcon,
   Cog6ToothIcon,
@@ -63,5 +102,11 @@ export default {
   EyeIcon,
   EyeSlashIcon,
   GoogleIcon,
-  FacebookIcon
+  FacebookIcon,
+  HeartIcon,
+  ChevronLeftIcon,
+  UserCircleIcon,
+  Bars3Icon,
+  MagnifyingGlassIcon,
+  CameraIcon
 };

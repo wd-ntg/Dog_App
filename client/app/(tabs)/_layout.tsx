@@ -1,102 +1,85 @@
-import { View, Text } from "react-native";
 import React from "react";
-import { Tabs } from "expo-router";
-import Icon from "../../constants/icon";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { View, Text, StyleSheet } from "react-native";
+import Home from "./Home";
+import Post from "./Post";
+import Shopping from "./Shopping";
+import icon from "@/constants/icon"; // Sử dụng thư viện icon (ví dụ: Ionicons hoặc MaterialIcons)
+import Save from "./Save";
 
-const TabIcon = ({ icon, color, name, focused }: any) => {
-  const IconComponent = icon;
-  return (
-    <View className="flex items-center justify-center mt-5">
-      <IconComponent color={color} size={focused ? 28 : 24} />
-      <Text
-        className={`${
-          focused ? "font-semibold" : "font-normal"
-        } text-xs mt-1 w-full`}
-      >
-        {name}
-      </Text>
-    </View>
-  );
-};
+const Tab = createBottomTabNavigator();
 
 const TabsLayout = () => {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarShowLabel: false,
-        tabBarActiveTintColor: "#08C2FF",
-        tabBarInactiveTintColor: "gray",
-        tabBarStyle: {
-          display: "flex",
-          height: 50,
-          backgroundColor: "#fff",
-          justifyContent: "center", 
-          alignItems: "center", 
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === "Home") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Post") {
+            iconName = focused ? "create" : "create-outline";
+          } else if (route.name === "Shopping") {
+            iconName = focused ? "cart" : "cart-outline";
+          } else if (route.name === "Save") {
+            iconName = focused ? "heart" : "heart-outline";
+          }
+
+          return (
+            <View style={[styles.iconContainer, focused && styles.focusedIconContainer]}>
+              <icon.Icon name={iconName || "help-circle"} size={20} color={focused ? "white" : color} />
+            </View>
+          );
         },
-      }}
+        tabBarLabel: ({ focused, color }) => {
+          return (
+            <Text
+              style={{
+                color: focused ? "#6200EE" : color,
+                fontSize: 12,
+                fontWeight: focused ? "bold" : "normal",
+              }}
+            >
+              {route.name}
+            </Text>
+          );
+        },
+        tabBarActiveTintColor: "#6200EE", // Màu khi tab được chọn
+        tabBarInactiveTintColor: "gray", // Màu khi tab không được chọn
+        tabBarStyle:  [styles.tabBarStyle,  { borderTopWidth: 0, elevation: 0, shadowOpacity: 0 }]
+      })}
     >
-      <Tabs.Screen
-        name="home"
-        options={{
-          title: "Home",
-          headerShown: false,
-          tabBarIcon: ({ color, focused }: any) => (
-            <TabIcon
-              icon={Icon.HomeIcon}
-              name="Home"
-              color={color}
-              focused={focused}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="adop"
-        options={{
-          title: "Nhận nuôi",
-          headerShown: false,
-          tabBarIcon: ({ color, focused }: any) => (
-            <TabIcon
-              icon={Icon.CubeTransparentIcon}
-              name="Nhận nuôi"
-              color={color}
-              focused={focused}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="post"
-        options={{
-          title: "Đăng tin",
-          headerShown: false,
-          tabBarIcon: ({ color, focused }: any) => (
-            <TabIcon
-              icon={Icon.ArrowUpOnSquareIcon}
-              name="Đăng tin"
-              color={color}
-              focused={focused}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="shopping"
-        options={{
-          title: "Mua sắm",
-          headerShown: false,
-          tabBarIcon: ({ color, focused }: any) => (
-            <TabIcon
-              icon={Icon.ShoppingCartIcon}
-              name="Mua sắm"
-              color={color}
-              focused={focused}
-            />
-          ),
-        }}
-      />
-    </Tabs>
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Post" component={Post} />
+      <Tab.Screen name="Shopping" component={Shopping} />
+      <Tab.Screen name="Save" component={Save} />
+    </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  tabBarStyle: {
+    height: 60,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    backgroundColor: "white",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  iconContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
+  focusedIconContainer: {
+    backgroundColor: "#6200EE",
+  },
+});
 
 export default TabsLayout;

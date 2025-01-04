@@ -3,20 +3,26 @@ import React from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
-import Loader from "@/components/Loader";
+import Loader from "@/common/components/Loader";
 
 const AuthLayout = () => {
   return (
     <>
       <Stack>
         <Stack.Screen
-          name="login"
+          name="Login"
           options={{
             headerShown: false,
           }}
         />
         <Stack.Screen
-          name="signup"
+          name="Register"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Info"
           options={{
             headerShown: false,
           }}
