@@ -7,7 +7,10 @@ import {
   TextInput,
   ScrollView,
   Alert,
+  Image,
+  FlatList,
 } from "react-native";
+import { BlurView } from "expo-blur";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "@/constants/icon";
 // import { ScrollView } from "react-native-gesture-handler";
@@ -17,6 +20,7 @@ import { predictImage } from "@/axios/api";
 import CardItem from "@/common/components/CardItem";
 import CardNewNews from "@/common/components/CardNewNews";
 import images from "@/constants/images";
+import CardImage from "@/common/components/CardImage";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -126,6 +130,14 @@ const Home = () => {
     },
   ];
 
+  const image_arr = [
+    { id: 1, image: images.card_explore1 },
+    { id: 2, image: images.card_explore2 },
+    { id: 3, image: images.card_explore3 },
+    { id: 4, image: images.card_explore4 },
+    { id: 5, image: images.card_explore5 },
+  ];
+
   const handleImageSelection = async (pickerFunction: any) => {
     try {
       const result = await pickerFunction({
@@ -160,7 +172,7 @@ const Home = () => {
   }, [result]);
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 h-screen bg-white">
       {/* Header Section */}
       <View className="px-4 py-6">
         {/* Header Icons */}
@@ -176,12 +188,12 @@ const Home = () => {
         {/* Greeting Section */}
         <View className="mt-6 px-2">
           <View className="flex flex-row items-center">
-            <Text className="text-2xl w-[14%]">Chào</Text>
+            <Text className="text-2xl">Chào</Text>
             <Text className="text-2xl font-semibold ml-1">Giang</Text>
           </View>
           <View className="mt-2 flex flex-row items-center">
-            <Text className="w-[44%]">Mừng bạn quay trở lại với</Text>
-            <Text className="font-semibold text-blue-600">SKY'P</Text>
+            <Text className="">Mừng bạn quay trở lại với</Text>
+            <Text className="font-semibold text-blue-600 ml-2">SKY'P</Text>
           </View>
         </View>
 
@@ -231,10 +243,12 @@ const Home = () => {
             </TouchableOpacity>
           ))}
         </View>
+      </View>
+      <View style={styles.contentContainer}>
         <ScrollView
-          contentContainerStyle={{ paddingBottom: 10 }}
           style={styles.scrollView}
           className="px-4"
+          showsVerticalScrollIndicator={false}
         >
           {activeCategory === "Khám phá" &&
             cards.map((card) => (
@@ -257,6 +271,47 @@ const Home = () => {
                 character={card.character}
               />
             ))}
+
+          {activeCategory === "Tin của bạn" && (
+            <View className="mt-4">
+              <View>
+                <Text className="text-[#ababab] font-semibold">
+                  Bài đăng gần nhất của bạn
+                </Text>
+                <Image
+                  className="relative w-full h-60 rounded-xl mt-2"
+                  source={images.card_explore2}
+                />
+                <BlurView
+                  intensity={40} // Điều chỉnh mức độ mờ (0-100)
+                  tint="light" // Dạng hiệu ứng mờ (light, dark, default)
+                  className="absolute bottom-0 w-full px-4 py-2 rounded-b-xl flex flex-row justify-between items-center"
+                >
+                  <Text className="text-[#FFBD73] text-lg font-semibold">
+                    Alex Chen
+                  </Text>
+                  <View className="flex-row justify-center items-center gap-2">
+                    <Image className="w-4 h-4" source={images.like_icon} />
+                    <Text>Like</Text>
+                  </View>
+                </BlurView>
+              </View>
+              <Text className="text-[#ababab] font-semibold mt-4">
+                Bài đăng khác
+              </Text>
+
+              <View className="" style={styles.imageGrid}>
+                {image_arr.map((image) => (
+                  <CardImage
+                    key={image.id}
+                    image={image.image}
+                    width={190}
+                    height={150}
+                  />
+                ))}
+              </View>
+            </View>
+          )}
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -268,5 +323,28 @@ export default Home;
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: "white",
+  },
+  blur_style: {
+    backdropFilter: "blur(12px)",
+  },
+
+  imageGrid: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  contentContainer: {
+    height: "60%",
+    width: "100%",
+    backgroundColor: "black",
+    borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });

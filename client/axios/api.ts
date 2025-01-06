@@ -3,9 +3,9 @@ import axios from "axios";
 // Địa chỉ của Flask server (Cập nhật theo địa chỉ thực tế)
 const FLASK_SERVER_URL = "http://192.168.1.162:5000";
 
-const logFormData = (formData) => {
+const logFormData = (formData:any) => {
     const entries = formData._parts; // `_parts` chứa dữ liệu
-    entries.forEach(([key, value]) => {
+    entries.forEach(([key, value]:any) => {
         console.log(`Key: ${key}`);
         if (typeof value === "object" && value.uri) {
             console.log(`File: ${value.uri}, Name: ${value.name}, Type: ${value.type}`);
@@ -16,10 +16,10 @@ const logFormData = (formData) => {
 };
 
 // Hàm gửi ảnh đến Flask API
-export const predictImage = async (imageUri) => {
+export const predictImage = async (imageUri:any) => {
     try {
         // Tạo FormData để gửi file
-        const formData = new FormData();
+        const formData:any = new FormData();
         formData.append("image", {
             uri: imageUri, // URI từ ImagePicker
             name: "photo.jpg", // Tên file

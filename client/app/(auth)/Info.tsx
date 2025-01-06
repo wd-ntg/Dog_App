@@ -138,7 +138,7 @@ const Info = () => {
           </View>
           {/* Button */}
           <View style={styles.buttonContainer}>
-            <Link href="/(tabs)/Home" asChild>
+            <Link href="/(tabs)/Post" asChild>
               <TouchableOpacity style={styles.button}>
                 <Text style={styles.buttonText}>Get Started</Text>
               </TouchableOpacity>

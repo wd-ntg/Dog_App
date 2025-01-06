@@ -25,6 +25,7 @@ const CardItem = ({ image, title, quantity }: any) => {
 export default CardItem;
 
 const styles = StyleSheet.create({
+  
   image_container: {
     width: 20,
     height: 20,

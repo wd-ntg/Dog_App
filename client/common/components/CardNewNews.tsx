@@ -20,7 +20,7 @@ const CardNewNews = ({ like, time, title, image, character, owner }: any) => {
         <View className="flex flex-row items-center">
           <Text className=" text-gray-500">{character}</Text>
         </View>
-        <Text className=" text-gray-500 mt-4">{owner}</Text>
+        <Text className=" text-gray-500 mt-2">{owner}</Text>
       </View>
     </Card>
   );

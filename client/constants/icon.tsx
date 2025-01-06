@@ -12,7 +12,9 @@ import {
   UserCircleIcon,
   Bars3Icon,
   MagnifyingGlassIcon,
-  CameraIcon
+  CameraIcon,
+  ArrowUpOnSquareStackIcon,
+  ChevronRightIcon
 } from "react-native-heroicons/outline";
 
 import { ChevronLeftIcon } from "react-native-heroicons/solid";
@@ -108,5 +110,7 @@ export default {
   UserCircleIcon,
   Bars3Icon,
   MagnifyingGlassIcon,
-  CameraIcon
+  CameraIcon,
+  ArrowUpOnSquareStackIcon,
+  ChevronRightIcon
 };
