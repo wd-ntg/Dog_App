@@ -37,7 +37,7 @@ const TabsLayout = () => {
           return (
             <Text
               style={{
-                color: focused ? "#6200EE" : color,
+                color: focused ? "#FFBD73" : color,
                 fontSize: 12,
                 fontWeight: focused ? "bold" : "normal",
               }}
@@ -46,7 +46,7 @@ const TabsLayout = () => {
             </Text>
           );
         },
-        tabBarActiveTintColor: "#6200EE", // Màu khi tab được chọn
+        tabBarActiveTintColor: "#FFBD73", // Màu khi tab được chọn
         tabBarInactiveTintColor: "gray", // Màu khi tab không được chọn
         tabBarStyle:  [styles.tabBarStyle,  { borderTopWidth: 0, elevation: 0, shadowOpacity: 0 }]
       })}
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   focusedIconContainer: {
-    backgroundColor: "#6200EE",
+    backgroundColor: "#FFBD73",
   },
 });
 

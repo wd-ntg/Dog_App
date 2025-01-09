@@ -118,7 +118,7 @@ const Info = () => {
 
               const dotColor = animatedValue.interpolate({
                 inputRange: [index - 1, index, index + 1],
-                outputRange: ["#ddd", "#F14A00", "#ddd"], // Màu của chấm hiện tại
+                outputRange: ["#ddd", "#FFBD73", "#ddd"], // Màu của chấm hiện tại
                 extrapolate: "clamp",
               });
 
@@ -138,7 +138,7 @@ const Info = () => {
           </View>
           {/* Button */}
           <View style={styles.buttonContainer}>
-            <Link href="/(tabs)/Post" asChild>
+            <Link href="/(tabs)/Home" asChild>
               <TouchableOpacity style={styles.button}>
                 <Text style={styles.buttonText}>Get Started</Text>
               </TouchableOpacity>

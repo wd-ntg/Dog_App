@@ -58,12 +58,12 @@ const Post = () => {
             <View style={styles.row}>
               <View style={styles.inputGroup}>
                 <Text style={styles.label}>Tên</Text>
-                <TextInput style={styles.input} placeholder="Nhập tên" />
+                <TextInput  placeholder="Nhập tên" />
               </View>
               <View style={styles.inputGroup}>
                 <Text style={styles.label}>Tuổi</Text>
                 <TextInput
-                  style={styles.input}
+                  
                   placeholder="Nhập tuổi"
                   keyboardType="numeric"
                 />

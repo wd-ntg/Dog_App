@@ -14,7 +14,8 @@ import {
   MagnifyingGlassIcon,
   CameraIcon,
   ArrowUpOnSquareStackIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  BackspaceIcon
 } from "react-native-heroicons/outline";
 
 import { ChevronLeftIcon } from "react-native-heroicons/solid";
@@ -112,5 +113,6 @@ export default {
   MagnifyingGlassIcon,
   CameraIcon,
   ArrowUpOnSquareStackIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  BackspaceIcon
 };

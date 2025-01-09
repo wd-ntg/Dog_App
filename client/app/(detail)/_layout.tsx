@@ -9,12 +9,7 @@ const DetailLayout = () => {
   return (
     <>
       <Stack>
-        <Stack.Screen
-          name="Product"
-          options={{
-            headerShown: false,
-          }}
-        />
+       
         <Stack.Screen
           name="Adop"
           options={{
@@ -41,6 +36,18 @@ const DetailLayout = () => {
         />
         <Stack.Screen
           name="DetailExplore"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="DetailProductShopping"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="DisplayAi"
           options={{
             headerShown: false,
           }}

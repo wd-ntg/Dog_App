@@ -23,6 +23,13 @@ import adop_dog from "../assets/images/adop_dog.jpg";
 import post1 from "../assets/images/post1.jpg";
 import upload_icon from "../assets/images/icon/upload-icon.png";
 import upload_icon_mc from "../assets/images/icon/upload-icon_mc.png";
+import chart_icon from "../assets/images/icon/chart.jpg";
+
+import share_product_icon from "../assets/images/icon/share-product-icon.png";
+import protect_icon from "../assets/images/icon/protect-icon.png";
+import half_rating_star_icon from "../assets/images/icon/half-rating-star-icon.png"
+import shopping_cart_icon from "../assets/images/icon/shopping-cart-icon.png"
+import dog_head_icon from "../assets/images/icon/dog-head-icon.png"
 
 export default {
   info1,
@@ -45,4 +52,10 @@ export default {
   post1,
   upload_icon,
   upload_icon_mc,
+  chart_icon,
+  share_product_icon,
+  protect_icon,
+  half_rating_star_icon,
+  shopping_cart_icon,
+  dog_head_icon
 };
