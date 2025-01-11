@@ -5,30 +5,51 @@ import {
   ScrollView,
   StyleSheet,
   Image,
-  Dimensions
+  Dimensions,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "@/constants/icon";
 import images from "@/constants/images";
+
+import apiPet from "@/axios/pet";
+
+import {
+  useRouter,
+  useGlobalSearchParams,
+  useLocalSearchParams,
+  router,
+} from "expo-router";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 const DetailExplore = () => {
-  const [activeTab, setActiveTab] = useState("popular"); // Trạng thái tab được chọn
+  const [activeTab, setActiveTab] = useState("popular");
 
-  const dogs = [
-    { id: 1, name: "Chihuahua", image: images.card_explore2 },
-    { id: 2, name: "Chihuahua", image: images.card_explore2 },
-    { id: 3, name: "Chihuahua", image: images.card_explore2 },
-    { id: 4, name: "Chihuahua", image: images.card_explore2 },
-    { id: 5, name: "Chihuahua", image: images.card_explore2 },
-    { id: 6, name: "Chihuahua", image: images.card_explore2 },
-    { id: 7, name: "Chihuahua", image: images.card_explore2 },
-    { id: 8, name: "Chihuahua", image: images.card_explore2 },
-    { id: 9, name: "Chihuahua", image: images.card_explore2 },
-  ];
+  const { id } = useLocalSearchParams();
+
+  const [listCategoryDog, setListCategoryDog] = useState(null);
+
+  const handleFetchDog = async () => {
+    try {
+      const response = await apiPet.getCategoryPets(id);
+
+      if (response.success == true) {
+        setListCategoryDog(response.data.breeds);
+      } else {
+        console.log("Error fetching category dogs from api");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    handleFetchDog();
+  }, []);
+
+  console.log("List", listCategoryDog);
 
   return (
     <SafeAreaView>
@@ -80,16 +101,34 @@ const DetailExplore = () => {
           </TouchableOpacity>
         </View>
         <View>
-          <ScrollView showsVerticalScrollIndicator={false} style={{ height: height * 0.75 }}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{ height: height * 0.75 }}
+          >
             <View style={styles.container}>
-              {dogs.map((dog) => (
-                <TouchableOpacity key={dog.id} style={styles.card}>
-                  <View className="relative">
-                    <Image source={dog.image} style={styles.image} />
-                    <Text className="absolute bottom-2 left-2 bg-white/40 px-2 py-1 rounded-full text-white" style={styles.text}>{dog.name}</Text>
-                  </View>
-                </TouchableOpacity>
-              ))}
+              {listCategoryDog &&
+                listCategoryDog.length > 0 &&
+                listCategoryDog.map((item, index) => (
+                  <TouchableOpacity
+                    onPress={() => router.push(`/pet/${item.name_dog}`)}
+                    key={index}
+                    style={styles.card}
+                  >
+                    <View className="relative">
+                      <Image
+                        source={{ uri: item.image }}
+                        style={styles.image}
+                      />
+
+                      <Text
+                        className="absolute bottom-2 left-2 bg-white/40 px-2 py-1 rounded-full text-white"
+                        style={styles.text}
+                      >
+                        {item.name_dog}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
             </View>
           </ScrollView>
         </View>
@@ -117,6 +156,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 180,
     borderRadius: 10,
+    objectFit: "fill",
   },
   text: {
     marginTop: 10,

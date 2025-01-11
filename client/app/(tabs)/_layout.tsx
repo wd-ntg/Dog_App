@@ -13,6 +13,7 @@ const TabsLayout = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        id: undefined,
         headerShown: false,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;

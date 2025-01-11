@@ -2,10 +2,14 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
 import { Card } from "react-native-ui-lib";
 import images from "@/constants/images";
+import { useRouter } from "expo-router";
 
-const CardItem = ({ image, title, quantity }: any) => {
+const CardItem = ({ image, title, quantity, urlParams }: any) => {
+
+  const router = useRouter()
+
   return (
-    <Card className="w-full py-4" onPress={() => console.log("pressed")}>
+    <Card className="w-full py-4" onPress={() =>  router.push(`/explore/${urlParams}`)}>
       <Card.Image source={image} style={styles.image_card} />
       <View className="flex flex-row justify-between items-center mt-2 px-2">
         <Text className="text-lg font-semibold">{title}</Text>

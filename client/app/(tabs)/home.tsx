@@ -22,6 +22,7 @@ import CardNewNews from "@/common/components/CardNewNews";
 import images from "@/constants/images";
 import CardImage from "@/common/components/CardImage";
 
+
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("Khám phá"); // State theo dõi tab được chọn
@@ -30,9 +31,12 @@ const Home = () => {
 
   const [activeCategory, setActiveCategory] = useState("Khám phá");
 
+
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
+
+  
 
   const cards = [
     {
@@ -40,37 +44,65 @@ const Home = () => {
       image: images.card_explore1,
       title: "Thân thiện",
       quantity: "52/120",
+      urlParams: "Thân thiện"
     },
     {
       id: 2,
       image: images.card_explore3,
       title: "Thông minh",
       quantity: "22/120",
+      urlParams: "Thông minh"
+
     },
     {
       id: 3,
       image: images.card_explore4,
       title: "Dễ thương",
       quantity: "12/120",
+      urlParams: "Dễ thương"
+
     },
     {
       id: 4,
       image: images.card_explore2,
-      title: "Đáng tin",
+      title: "Trung thành",
       quantity: "86/120",
+      urlParams: "Trung thành"
+
     },
     {
       id: 5,
       image: images.card_explore5,
-      title: "Giữ nhà",
+      title: "Năng động",
       quantity: "86/120",
+      urlParams: "Năng động"
+
     },
     {
       id: 6,
-      image: images.card_explore2,
-      title: "Đáng tin",
+      image: images.card_explore5,
+      title: "Bảo vệ",
       quantity: "86/120",
+      urlParams: "Bảo vệ"
+
     },
+    {
+      id: 7,
+      image: images.card_explore5,
+      title: "Nhanh nhẹn",
+      quantity: "86/120",
+      urlParams: "Nhanh nhẹn"
+
+    },
+    {
+      id: 8,
+      image: images.card_explore5,
+      title: "Tình cảm",
+      quantity: "86/120",
+      urlParams: "Tình cảm"
+
+    },
+    
   ];
 
   const cardNewNews = [
@@ -138,6 +170,7 @@ const Home = () => {
     { id: 5, image: images.card_explore5 },
   ];
 
+
   const handleImageSelection = async (pickerFunction: any) => {
     try {
       const result = await pickerFunction({
@@ -148,11 +181,15 @@ const Home = () => {
       if (!result.canceled && result.assets.length > 0) {
         const imageUri = result.assets[0].uri;
         setImage(imageUri);
+
+        console.log("Hello")
         setResult(null);
 
         setLoading(true);
         try {
           const response = await predictImage(imageUri);
+
+          console.log("Hello", response)
           if (response) {
             setResult(response);
           }
@@ -257,6 +294,7 @@ const Home = () => {
                 image={card.image}
                 title={card.title}
                 quantity={card.quantity}
+                urlParams={card.urlParams}
               />
             ))}
           {activeCategory === "Tin mới" &&
