@@ -1,6 +1,6 @@
-import HomeScreen from "./Home";
-import AdopScreen from "./Adop";
-import PostScreen from "./Post";
-import ShoppingScreen from "./Shopping";
+import HomeScreen from "./home";
+import AdopScreen from "./adop";
+import PostScreen from "./post";
+import ShoppingScreen from "./shopping";
 
 export { HomeScreen, AdopScreen, PostScreen, ShoppingScreen };

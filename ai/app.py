@@ -12,8 +12,8 @@ import tempfile
 
 # Kết nối tới MongoDB
 client = MongoClient("mongodb://localhost:27017/")
-db = client['dog']  # Tên database
-collection = db['dog_data'] 
+db = client['petapp']  # Tên database
+collection = db['breedinfos'] 
 
 # 1. Định nghĩa danh sách các lớp
 class_names = ['Abyssinian', 'Affenpinscher', 'Afghan Hound', 'African Hunting Dog', 'Airedale',
@@ -152,17 +152,21 @@ def predict():
             alternative['details'] = get_details_from_db(alternative_name)
 
         return jsonify({
+            "success": True,
             "identified": identified,
             "alternatives": alternatives
         }), 200
 
     except Exception as e:
         logging.error(f"Unexpected error: {e}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify({
+            "success": False,
+            "error": e
+        }), 500
 
 
 
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

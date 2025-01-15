@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Provider } from "react-redux";
 
 import { store } from "@/store/store";
-import Login from "@/app/(auth)/Login";
+import Login from "@/app/(auth)/login";
 import Register from "@/app/(auth)/Register";
 import TabsLayout from "@/app/(tabs)/_layout"; // Không có NavigationContainer ở đây
 import Info from "./(auth)/Info";
@@ -16,17 +16,17 @@ const App = () => {
 
   return (
     <Provider store={store}>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {isAuthenticated ? (
-            <Stack.Screen name="Tabs" component={TabsLayout} />
-          ) : (
-            <>
+      <Stack.Navigator id={undefined} screenOptions={{ headerShown: false }}>
+        {isAuthenticated ? (
+          <Stack.Screen name="Tabs" component={TabsLayout} />
+        ) : (
+          <>
             <Stack.Screen name="(auth)/Info" component={Info} />
-              <Stack.Screen name="(auth)/Login" component={Login} />
-              <Stack.Screen name="(auth)/Register" component={Register} />
-            </>
-          )}
-        </Stack.Navigator>
+            <Stack.Screen name="(auth)/Login" component={Login} />
+            <Stack.Screen name="(auth)/Register" component={Register} />
+          </>
+        )}
+      </Stack.Navigator>
     </Provider>
   );
 };

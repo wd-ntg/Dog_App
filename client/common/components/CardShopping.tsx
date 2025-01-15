@@ -2,13 +2,16 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
 import { Card } from "react-native-ui-lib";
 import Icon from "@/constants/icon";
+import { useRouter } from "expo-router";
 
-const CardShopping = ({ image, title, money, sell_quantity }: any) => {
+const CardShopping = ({ image, title, money, sell_quantity, urlParams }: any) => {
+  const router = useRouter()
+
   return (
-    <Card style={styles.card_container} onPress={() => console.log("pressed")}>
+    <Card style={styles.card_container} onPress={() => router.push(`/product/${urlParams}`)}>
       <Image
         style={[styles.image_card, { width: "100%", height: 150 }]}
-        source={image}
+        source={{ uri: image }}
       />
       <View className="mt-4">
         <View className="flex-row justify-between items-center">

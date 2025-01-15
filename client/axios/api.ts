@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Địa chỉ của Flask server (Cập nhật theo địa chỉ thực tế)
-const FLASK_SERVER_URL = "http://172.31.98.50:5000";
+const FLASK_SERVER_URL = "http://192.168.1.3:5000";
 
 const logFormData = (formData: any) => {
   const entries = formData._parts; // `_parts` chứa dữ liệu

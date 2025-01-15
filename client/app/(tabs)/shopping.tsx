@@ -7,7 +7,7 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "@/constants/icon";
 
@@ -18,13 +18,49 @@ import CardImage from "@/common/components/CardImage";
 
 import CardShopping from "@/common/components/CardShopping";
 
+import apiProduct from "@/axios/shopping";
+import { useRouter } from "expo-router";
+
 const width = Dimensions.get("window").width;
 
 const Shopping = () => {
+  const router = useRouter();
+
+  const [bestSeller, setBestSeller] = useState([]);
+  const [productByCategory, setProductByCategory] = useState([]);
+
+
+  const handleFetchData = async () => {
+    try {
+      const responseBestSeller = await apiProduct.getProducts({ best_seller: true });
+      const responseProductByCategory = await apiProduct.fetchProductsByCategory();
+
+      if (responseBestSeller.success == true) {
+        setBestSeller(responseBestSeller?.data?.products);
+      } else {
+        console.log("Error fetching category dogs from api");
+      }
+
+      if (responseProductByCategory.success == true) {
+        setProductByCategory(responseProductByCategory?.data);
+
+      } else {
+        console.log("Error fetching category dogs from api");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    handleFetchData();
+  }, []);
+
   const data = [
     { id: 1, image: images.card_explore1 },
     { id: 2, image: images.card_explore2 },
     { id: 3, image: images.card_explore3 },
+
   ];
 
   const card_shopping = [
@@ -88,21 +124,74 @@ const Shopping = () => {
         <ScrollView style={{ height: 455 }}>
           <View className="mt-6">
             <View className="flex-row justify-between">
-              <Text className="text-lg font-semibold px-4">Mới cập nhật</Text>
+              <Text className="text-lg font-semibold px-4">Best Seller</Text>
             </View>
             <View className="" style={styles.imageGrid}>
-              {card_shopping.map((item) => (
+              {bestSeller && bestSeller.map((item) => (
                 <CardShopping
-                  key={item.id}
-                  image={item.image}
-                  title={item.title}
-                  money={item.quantity}
-                  sell_quantity={item.sell_quantity}
+                  key={item._id}
+                  image={item.images[0]}
+                  title={item.name}
+                  money={item.price}
+                  sell_quantity={item.stockCount}
+                  urlParams={item._id}
                 />
               ))}
             </View>
           </View>
-          <View className="mt-4">
+          {productByCategory && productByCategory.length > 0 && productByCategory.map((item, index) => (
+
+            <View className="mt-6" key={index}>
+              <View className="flex-row justify-between">
+                <Text className="text-lg font-semibold px-4">
+                  {
+                    (() => {
+                      switch (item.category) {
+                        case "toys":
+                          return "Đồ chơi";
+                        case "accessories":
+                          return "Phụ kiện";
+                        case "food":
+                          return "Thức ăn";
+                        case "grooming":
+                          return "Chăm sóc";
+                        case "health":
+                          return "Sức khỏe";
+                        default:
+                          return item.category;
+                      }
+                    })()
+                  }
+                </Text>
+                <TouchableOpacity onPress={() => router.push(`/listProduct/${item.category}`)}>
+                  <View className="flex-row items-center">
+                    <Text className="text-lg  font-semibold ">Tất cả </Text>
+                    <Icon.ChevronRightIcon
+                      className=""
+                      size={20}
+                      color="black"
+                    />
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={{ width: "100%", height: 120, marginTop: 10 }}
+              >
+                {item.products.map((product) => (
+                  <CardImage
+                    urlParams={product._id}
+                    key={product._id}
+                    image={product.images[0]}
+                    width={120}
+                    height={120}
+                  />
+                ))}
+              </ScrollView>
+            </View>
+          ))}
+          {/* <View className="mt-4">
             <View className="flex-row justify-between">
               <Text className="text-lg font-semibold mx-4">Thực phẩm</Text>
               <TouchableOpacity>
@@ -151,7 +240,7 @@ const Shopping = () => {
                 />
               ))}
             </ScrollView>
-          </View>
+          </View> */}
         </ScrollView>
       </View>
     </SafeAreaView>

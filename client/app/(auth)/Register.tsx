@@ -28,7 +28,7 @@ const RegisterScreen = () => {
         </View>
 
         <View className="mt-8 mx-8 flex justify-center items-center">
-         
+
           <FormField
             title="Email"
             value={form.email}
@@ -53,7 +53,7 @@ const RegisterScreen = () => {
           />
           <Text className="mt-8">
             Bạn chưa có tài khoản?{" "}
-            <Link className="text-blue-600" href="/(auth)/Login">
+            <Link className="text-blue-600" href="/(auth)/login">
               Đăng ký
             </Link>{" "}
           </Text>

@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
   FlatList,
+  Modal,
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -21,6 +22,8 @@ import CardItem from "@/common/components/CardItem";
 import CardNewNews from "@/common/components/CardNewNews";
 import images from "@/constants/images";
 import CardImage from "@/common/components/CardImage";
+import { router } from "expo-router";
+
 
 
 const Home = () => {
@@ -36,7 +39,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
 
-  
+
 
   const cards = [
     {
@@ -57,9 +60,9 @@ const Home = () => {
     {
       id: 3,
       image: images.card_explore4,
-      title: "Dễ thương",
+      title: "Hoạt bát",
       quantity: "12/120",
-      urlParams: "Dễ thương"
+      urlParams: "Hoạt bát"
 
     },
     {
@@ -102,7 +105,7 @@ const Home = () => {
       urlParams: "Tình cảm"
 
     },
-    
+
   ];
 
   const cardNewNews = [
@@ -170,6 +173,8 @@ const Home = () => {
     { id: 5, image: images.card_explore5 },
   ];
 
+  const [modalVisible, setModalVisible] = useState(false);
+
 
   const handleImageSelection = async (pickerFunction: any) => {
     try {
@@ -182,16 +187,22 @@ const Home = () => {
         const imageUri = result.assets[0].uri;
         setImage(imageUri);
 
-        console.log("Hello")
+
         setResult(null);
 
         setLoading(true);
         try {
           const response = await predictImage(imageUri);
 
-          console.log("Hello", response)
-          if (response) {
-            setResult(response);
+          if (response && response.success) {
+            if (response.identified) {
+              //console.log(response.identified);
+              router.push(`/pet/${response.identified.name}`)
+            } else {
+
+              setResult(response.alternatives);
+              setModalVisible(true);
+            }
           }
         } catch (error) {
           Alert.alert("Error", "Failed to get a prediction. Please try again.");
@@ -204,9 +215,7 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(result);
-  }, [result]);
+
 
   return (
     <SafeAreaView className="flex-1 h-screen bg-white">
@@ -268,9 +277,8 @@ const Home = () => {
               className="flex items-center pb-2"
             >
               <Text
-                className={`text-lg ${
-                  activeTab === tab ? "font-bold text-black" : "text-gray-500"
-                }`}
+                className={`text-lg ${activeTab === tab ? "font-bold text-black" : "text-gray-500"
+                  }`}
               >
                 {tab}
               </Text>
@@ -352,7 +360,62 @@ const Home = () => {
           )}
         </ScrollView>
       </View>
-    </SafeAreaView>
+      {modalVisible && (
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible} // Tạo điều kiện mở/đóng modal
+          onRequestClose={() => setModalVisible(false)} // Đóng modal khi bấm nút back
+        >
+          <View style={styles.overlay}>
+            <View style={styles.modalContainer}>
+              {/* Tiêu đề */}
+              <View style={styles.modalHeader}>
+                <Text style={styles.title}>Hệ thống chưa nhận diện được</Text>
+                <Text style={styles.title}>Một vài pet có thể liên quan</Text>
+              </View>
+
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={styles.scrollViewModal}
+              >
+                <View style={styles.containerModal}>
+                  {result &&
+                    result.length > 0 &&
+                    result.map((item, index) => (
+                      <TouchableOpacity
+                        onPress={() => router.push(`/pet/${item.details?.name}`)}
+                        key={index}
+                        style={styles.card}
+                      >
+                        <View style={styles.cardImageContainer}>
+                          <Image
+                            source={{ uri: item.details?.image }}
+                            style={styles.image}
+                          />
+
+                          <Text style={styles.cardText}>
+                            {item.details?.name_vn}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    ))}
+                </View>
+              </ScrollView>
+
+              {/* Nút đóng modal */}
+              <TouchableOpacity
+                onPress={() => setModalVisible(false)} // Đóng modal
+                style={styles.closeButton}
+              >
+                <Text style={styles.closeButtonText}>Đóng</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
+      )}
+    </SafeAreaView >
   );
 };
 
@@ -384,5 +447,92 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Màu nền mờ đen cho modal
+  },
+  modalContainer: {
+    width: "90%",
+    backgroundColor: "#fff", // Nền trắng cho modal
+    borderRadius: 10,
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5, // Tạo hiệu ứng đổ bóng cho modal
+  },
+  modalHeader: {
+    marginBottom: 20,
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#333", // Màu chữ cho tiêu đề
+  },
+  scrollViewModal: {
+    width: "100%",
+  },
+  containerModal: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    padding: 10,
+  },
+  card: {
+    width: "30%", // Chiều rộng của mỗi phần tử (1/3 màn hình)
+    marginBottom: 10, // Khoảng cách giữa các dòng
+    alignItems: "center", // Căn giữa nội dung trong mỗi thẻ
+    backgroundColor: "#f9f9f9",
+    borderRadius: 10,
+    padding: 10,
+  },
+  cardImageContainer: {
+    position: "relative",
+    width: 120,
+    height: 180,
+    borderRadius: 10,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 10,
+    objectFit: "fill", // Điều chỉnh ảnh để fit trong khung
+  },
+  cardText: {
+    position: "absolute",
+    bottom: 10,
+    left: 10,
+    backgroundColor: "#00000080", // Nền tối với độ trong suốt
+    color: "white",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 20,
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+  closeButton: {
+    marginTop: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    backgroundColor: "#ff5722", // Màu nền của nút đóng
+    borderRadius: 30,
+    alignItems: "center",
+  },
+  closeButtonText: {
+    color: "#fff", // Màu chữ cho nút đóng
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

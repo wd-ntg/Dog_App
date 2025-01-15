@@ -49,7 +49,7 @@ const DetailExplore = () => {
     handleFetchDog();
   }, []);
 
-  console.log("List", listCategoryDog);
+
 
   return (
     <SafeAreaView>
@@ -73,28 +73,24 @@ const DetailExplore = () => {
         <View className="flex-row justify-between items-center mt-6 bg-gray-100 rounded-full w-[90%] self-center p-1">
           <TouchableOpacity
             onPress={() => setActiveTab("popular")}
-            className={`flex-1 items-center justify-center py-3 rounded-tl-full rounded-bl-full ${
-              activeTab === "popular" ? "bg-orange-300" : "bg-transparent"
-            }`}
+            className={`flex-1 items-center justify-center py-3 rounded-tl-full rounded-bl-full ${activeTab === "popular" ? "bg-orange-300" : "bg-transparent"
+              }`}
           >
             <Text
-              className={`text-lg font-semibold ${
-                activeTab === "popular" ? "text-white" : "text-gray-500"
-              }`}
+              className={`text-lg font-semibold ${activeTab === "popular" ? "text-white" : "text-gray-500"
+                }`}
             >
               Độ phổ biến
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => setActiveTab("latest")}
-            className={`flex-1 items-center justify-center py-3 rounded-tr-full rounded-br-full ${
-              activeTab === "latest" ? "bg-orange-300" : "bg-transparent"
-            }`}
+            className={`flex-1 items-center justify-center py-3 rounded-tr-full rounded-br-full ${activeTab === "latest" ? "bg-orange-300" : "bg-transparent"
+              }`}
           >
             <Text
-              className={`text-lg font-semibold ${
-                activeTab === "latest" ? "text-white" : "text-gray-500"
-              }`}
+              className={`text-lg font-semibold ${activeTab === "latest" ? "text-white" : "text-gray-500"
+                }`}
             >
               Cập nhật
             </Text>

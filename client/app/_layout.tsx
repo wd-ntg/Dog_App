@@ -19,7 +19,7 @@ import {
 // This is the default configuration
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
-  strict: false, 
+  strict: false,
 });
 
 import { useColorScheme } from '@/common/hooks/useColorScheme';
@@ -28,33 +28,33 @@ import { useColorScheme } from '@/common/hooks/useColorScheme';
 SplashScreen.preventAutoHideAsync();
 
 
-export default function (){
-    const [stateLoaded, setStateLoaded] = useState(false);
-    const [fontsLoaded] = useFonts({
-        SpaceMono: require('../assets/fonts/Poppins-Regular.ttf'),
-      });
+export default function () {
+  const [stateLoaded, setStateLoaded] = useState(false);
+  const [fontsLoaded] = useFonts({
+    SpaceMono: require('../assets/fonts/Poppins-Regular.ttf'),
+  });
 
-      const onLayout = useCallback(() => {
-		SplashScreen.hideAsync();
-	}, []);
+  const onLayout = useCallback(() => {
+    SplashScreen.hideAsync();
+  }, []);
 
-    const onBeforeLimit = useCallback(() => setStateLoaded(true), []);
+  const onBeforeLimit = useCallback(() => setStateLoaded(true), []);
 
 
-    return (
-		<Provider store={store}>
-			<PersistGate persistor={persistor} onBeforeLift={onBeforeLimit}>
-				{/* Render the SafeAreaView and AppNavigator when fonts and state are loaded */}
-				{fontsLoaded && stateLoaded && (
-					<GestureHandlerRootView
-						onLayout={onLayout}
-						>
-						<RootLayout />
-					</GestureHandlerRootView>
-				)}
-			</PersistGate>
-		</Provider>
-	);
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor} onBeforeLift={onBeforeLimit}>
+        {/* Render the SafeAreaView and AppNavigator when fonts and state are loaded */}
+        {fontsLoaded && stateLoaded && (
+          <GestureHandlerRootView
+            onLayout={onLayout}
+          >
+            <RootLayout />
+          </GestureHandlerRootView>
+        )}
+      </PersistGate>
+    </Provider>
+  );
 
 }
 
@@ -83,6 +83,8 @@ function RootLayout() {
         <Stack.Screen name="(detail)" options={{ headerShown: false }} />
         <Stack.Screen name="explore" options={{ headerShown: false }} />
         <Stack.Screen name="pet" options={{ headerShown: false }} />
+        <Stack.Screen name="product" options={{ headerShown: false }} />
+        <Stack.Screen name="listProduct" options={{ headerShown: false }} />
 
       </Stack>
       <StatusBar style="auto" />

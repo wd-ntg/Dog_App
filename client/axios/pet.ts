@@ -7,7 +7,7 @@ const getCategoryPets = async (id: any) => {
     const query = new URLSearchParams({ id }).toString();
 
     // Gọi API với query string
-    const response:any = await axios.get(`${SERVER_EXPRESS_URL}/api/breed/categories/?${query}`);
+    const response: any = await axios.get(`${SERVER_EXPRESS_URL}/api/breed/categories/?${query}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching category dogs:", error);
@@ -20,7 +20,7 @@ const getDetailPet = async (id: any) => {
     const query = new URLSearchParams({ id }).toString();
 
     // Gọi API với query string
-    const response:any = await axios.get(`${SERVER_EXPRESS_URL}/api/breed/detail/?${query}`);
+    const response: any = await axios.get(`${SERVER_EXPRESS_URL}/api/breed/detail/?${query}`);
 
     return response.data;
   } catch (error) {

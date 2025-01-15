@@ -1,9 +1,9 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Text, StyleSheet } from "react-native";
-import Home from "./Home";
-import Post from "./Post";
-import Shopping from "./Shopping";
+import Home from "./home";
+import Post from "./post";
+import Shopping from "./shopping";
 import icon from "@/constants/icon"; // Sử dụng thư viện icon (ví dụ: Ionicons hoặc MaterialIcons)
 import Save from "./Save";
 
@@ -12,8 +12,9 @@ const Tab = createBottomTabNavigator();
 const TabsLayout = () => {
   return (
     <Tab.Navigator
+      id={undefined}
       screenOptions={({ route }) => ({
-        id: undefined,
+
         headerShown: false,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -49,7 +50,7 @@ const TabsLayout = () => {
         },
         tabBarActiveTintColor: "#FFBD73", // Màu khi tab được chọn
         tabBarInactiveTintColor: "gray", // Màu khi tab không được chọn
-        tabBarStyle:  [styles.tabBarStyle,  { borderTopWidth: 0, elevation: 0, shadowOpacity: 0 }]
+        tabBarStyle: [styles.tabBarStyle, { borderTopWidth: 0, elevation: 0, shadowOpacity: 0 }]
       })}
     >
       <Tab.Screen name="Home" component={Home} />
